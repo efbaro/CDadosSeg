@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="internalOnly" package="com.dropbox.android" platformBuildVersionCode="23" platformBuildVersionName="6.0-2704002">
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:resizeable="true" android:smallScreens="true" android:xlargeScreens="true"/>
+    <uses-feature android:name="android.hardware.wifi" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false"/>
+    <permission android:name="com.dropbox.android.provider.ACCOUNT_INFO_READ" android:protectionLevel="signatureOrSystem"/>
+    <permission android:name="com.dropbox.android.provider.CAMERA_UPLOAD_SETTINGS_READ" android:protectionLevel="signatureOrSystem"/>
+    <permission android:name="com.dropbox.android.provider.CAMERA_UPLOAD_SETTINGS_WRITE" android:protectionLevel="signatureOrSystem"/>
+    <permission android:name="com.dropbox.android.service.ACCOUNT_INFO_ALARM_TRIGGER" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.dropbox.android.service.ACCOUNT_INFO_ALARM_TRIGGER"/>
+    <permission android:name="com.dropbox.android.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.dropbox.android.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="com.android.vending.BILLING"/>
+    <uses-permission-sdk-23 android:name="android.permission.USE_FINGERPRINT"/>
+    <application android:allowBackup="false" android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name" android:largeHeap="true" android:logo="@drawable/tab_dropbox" android:name="com.dropbox.android.DropboxApplication" android:requiredAccountType="com.dropbox.android.account">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="android.content.APP_RESTRICTIONS" android:resource="@xml/app_restrictions"/>
+        <provider android:authorities="com.dropbox.android.provider.SDK" android:exported="true" android:name="com.dropbox.android.provider.SDKProvider"/>
+        <provider android:authorities="com.dropbox.android.provider.DbxCuSettingsProvider" android:exported="true" android:name="com.dropbox.android.provider.DbxCuSettingsProvider"/>
+        <provider android:authorities="com.dropbox.android.FileCache" android:exported="true" android:name="com.dropbox.android.provider.FileCacheProvider">
+            <grant-uri-permission android:pathPrefix="/filecache/"/>
+        </provider>
+        <provider android:authorities="com.dropbox.android.provider.CameraCaptureProvider" android:enabled="false" android:exported="false" android:grantUriPermissions="true" android:name="com.dropbox.android.provider.CameraCaptureProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/camera_capture_file_paths"/>
+        </provider>
+        <provider android:authorities="com.dropbox.android.provider.GlobalExternalProvider" android:enabled="true" android:exported="false" android:grantUriPermissions="true" android:name="com.dropbox.android.provider.GlobalExternalProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/global_external_file_paths"/>
+        </provider>
+        <service android:enabled="true" android:exported="false" android:icon="@drawable/icon" android:label="Camera Upload" android:name="com.dropbox.android.service.CameraUploadService"/>
+        <service android:enabled="true" android:exported="false" android:icon="@drawable/icon" android:label="Notifications" android:name="com.dropbox.android.notifications.SystemTrayNotificationService"/>
+        <service android:enabled="true" android:exported="false" android:name="com.dropbox.android.service.CancelUploadsIntentService"/>
+        <service android:exported="false" android:name="com.dropbox.android.gcm.GcmService"/>
+        <service android:exported="true" android:name="com.dropbox.android.service.AuthenticationService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator"/>
+        </service>
+        <service android:exported="false" android:name="com.dropbox.android.authenticator.SyncService">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter"/>
+        </service>
+        <service android:enabled="true" android:exported="false" android:name="com.dropbox.sync.android.DbxSyncService"/>
+        <service android:enabled="true" android:exported="false" android:name="com.dropbox.android.exception.CrashUploaderService" android:process=":crash_uploader"/>
+        <service android:enabled="true" android:exported="true" android:name="com.evernote.android.job.gcm.PlatformGcmService" android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
+            <intent-filter>
+                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
+            </intent-filter>
+        </service>
+        <receiver android:enabled="true" android:exported="true" android:name="com.dropbox.android.util.ExternalMediaStatusReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_REMOVED"/>
+                <action android:name="android.intent.action.MEDIA_BAD_REMOVAL"/>
+                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="true" android:icon="@drawable/icon" android:label="Dropbox Network Status Receiver" android:name="com.dropbox.android.service.DropboxNetworkReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="true" android:icon="@drawable/icon" android:label="Dropbox Camera Upload Wakeup Receiver" android:name="com.dropbox.android.service.WakeupReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="false" android:exported="true" android:icon="@drawable/icon" android:label="Dropbox Camera Upload New Picture Receiver" android:name="com.dropbox.android.service.NewPictureReceiver">
+            <intent-filter>
+                <action android:name="android.hardware.action.NEW_PICTURE"/>
+                <action android:name="android.hardware.action.NEW_VIDEO"/>
+                <action android:name="com.android.camera.NEW_PICTURE"/>
+                <data android:mimeType="image/*"/>
+                <data android:mimeType="video/*"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="true" android:icon="@drawable/icon" android:label="Dropbox Report Receiver" android:name="com.dropbox.android.service.ReportReceiver">
+            <intent-filter>
+                <action android:name="com.dropbox.android.action.REPORT"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.dropbox.android.gcm.GcmReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="com.dropbox.android"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="true" android:name="com.dropbox.android.service.CSettingsChangeReceiver">
+            <intent-filter>
+                <action android:name="com.dropbox.android.receiver.intent.SETTINGS_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="false" android:name="com.dropbox.android.activity.QrAuthActivity$QrAlarmReceiver"/>
+        <receiver android:enabled="true" android:exported="true" android:name="com.dropbox.android.util.InstallReferrerReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.SnoozeCUActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.SnoozeCUFollowupPromptActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CameraUploadLinkDesktopPromptActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.activity.PairingWebViewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.activity.BluenoteWebViewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.spacesaver.SpaceSaverMainActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="true" android:name="com.dropbox.android.activity.IntegrationLandingPageActivity" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.GALLERY_LANDING_PAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.DOCS_LANDING_PAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.prefs.UnlinkAllAppsActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.SearchActivity" android:theme="@style/DbxBase.ToolbarActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:configChanges="keyboard" android:exported="false" android:name="com.dropbox.android.activity.lock.LockCodeActivity" android:theme="@style/DbxBase.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:exported="true" android:name="com.dropbox.android.activity.lock.VerifyLockForExternalActivity" android:theme="@style/DbxBase.NoActionBar">
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.VERIFY_PIN_CODE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.activity.VideoPlayerActivity" android:theme="@style/DbxBase.NoActionBar.Fullscreen"/>
+        <activity android:enabled="true" android:exported="false" android:name="com.dropbox.android.activity.SaveToDropbox" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:enabled="true" android:exported="true" android:label="@string/share_to_dropbox_picker_text" android:name="com.dropbox.android.activity.DropboxSendTo" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/*"/>
+                <data android:mimeType="audio/*"/>
+                <data android:mimeType="image/*"/>
+                <data android:mimeType="text/*"/>
+                <data android:mimeType="video/*"/>
+                <data android:mimeType="multipart/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="message/rfc822"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="file"/>
+            </intent-filter>
+        </activity>
+        <activity android:enabled="true" android:exported="true" android:name="com.dropbox.android.activity.DropboxGetFrom" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.OPENABLE"/>
+                <data android:mimeType="*/*"/>
+            </intent-filter>
+        </activity>
+        <activity android:enabled="true" android:exported="true" android:name="com.dropbox.android.activity.DropboxChooserActivity" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.GET_CONTENT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.GET_PREVIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.GET_DIRECT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:label="@string/folder_name" android:name="com.dropbox.android.activity.DropboxCreateShortcut" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:label="@string/app_name" android:name="com.dropbox.android.activity.auth.DropboxAuth" android:theme="@style/DbxBase.Light.DialogOnTablets">
+            <intent-filter android:label="Dropbox Authentication">
+                <action android:name="com.dropbox.android.AUTHENTICATE_V1"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter android:label="Dropbox Authentication">
+                <action android:name="com.dropbox.android.AUTHENTICATE_V2"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:launchMode="singleTop" android:name="com.dropbox.android.activity.LoginOrNewAcctActivity" android:theme="@style/DbxBase.ToolbarActivity.Intro" android:windowSoftInputMode="adjustResize|stateUnchanged">
+            <intent-filter>
+                <action android:name="com.dropbox.intent.action.DROPBOX_LOGIN"/>
+                <action android:name="com.dropbox.intent.action.DROPBOX_SIGNUP"/>
+                <action android:name="com.dropbox.intent.action.LOGIN"/>
+                <action android:name="com.dropbox.intent.action.SIGN_UP"/>
+                <action android:name="com.dropbox.intent.action.HTC_TOKEN"/>
+                <action android:name="com.dropbox.intent.action.SAMSUNG_LOGIN"/>
+                <action android:name="com.dropbox.intent.action.SAMSUNG_SIGN_UP"/>
+                <action android:name="com.dropbox.intent.action.WEB_SESSION_TOKEN"/>
+                <action android:name="com.dropbox.intent.action.STD_OOBE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:launchMode="singleTask" android:name="com.dropbox.android.activity.SsoCallbackReceiver" android:theme="@style/DbxBase.NoDisplay">
+            <intent-filter android:priority="999">
+                <data android:scheme="dbx-sso"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.TourActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.GSActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="true" android:name="com.dropbox.android.activity.GSUrlHandlerActivity" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:scheme="http"/>
+                <data android:host="www.dropbox.com"/>
+                <data android:host="m.dropbox.com"/>
+                <data android:host="dropbox.com"/>
+                <data android:pathPrefix="/gs"/>
+                <data android:pathPrefix="/gs/"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.GSUrlHandlerActivity$PostLogin" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.GSPanelActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.activity.GalleryActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.PhotoEditActivity" android:theme="@style/DbxBase.NoActionBar.Black"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.activity.DropboxWebViewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.DevControllerActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.DevTiburonActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.DevSpaceSaverActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.SendFeedbackActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.prefs.PrefsActivity" android:theme="@style/DbxBase.Preferences"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.QrAuthActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.clientlink.ClientLinkInstallActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.IntroTourActivity" android:theme="@style/DbxBase.NoActionBar.Fullscreen.White"/>
+        <activity android:exported="true" android:name="com.dropbox.android.activity.AccountsAndSyncSetupActivity" android:theme="@style/DbxBase.NoActionBar">
+            <intent-filter>
+                <action android:name="com.dropbox.android.action.AUTHENTICATOR_ADD_MULTI_ACCOUNT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:icon="@drawable/textb" android:label="@string/text_editor_app_name" android:name="com.dropbox.android.activity.TextEditActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <provider android:authorities="com.dropbox.android.ZipperedMediaProvider" android:exported="false" android:name="com.dropbox.android.provider.ZipperedMediaProvider"/>
+        <provider android:authorities="com.dropbox.android.PhotosProvider" android:exported="false" android:name="com.dropbox.android.provider.PhotosProvider"/>
+        <activity android:exported="true" android:launchMode="singleTask" android:name="com.dropbox.android.activity.DropboxBrowser" android:theme="@style/DbxBase.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter android:label="Dropbox File Browser">
+                <action android:name="com.dropbox.BROWSE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:host="com.dropbox.android.Dropbox" android:pathPrefix="/metadata" android:scheme="content"/>
+            </intent-filter>
+            <intent-filter android:label="Dropbox File Browser">
+                <action android:name="com.dropbox.BROWSE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="launch" android:path="/" android:scheme="dropbox"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:name="com.dropbox.android.sharedlink.SharedLinkActivity" android:theme="@style/DbxBase.NoDisplay">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:scheme="http"/>
+                <data android:host="www.dropbox.com"/>
+                <data android:host="m.dropbox.com"/>
+                <data android:host="dropbox.com"/>
+                <data android:pathPrefix="/l/s/"/>
+                <data android:pathPrefix="/l/sh/"/>
+                <data android:pathPrefix="/l/spri/"/>
+                <data android:pathPrefix="/member_link/"/>
+                <data android:pathPrefix="/s/"/>
+                <data android:pathPrefix="/sh/"/>
+                <data android:pathPrefix="/sm/launch_intent_or_fallback_page"/>
+                <data android:pathPrefix="/spri/"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="1"/>
+                <data android:scheme="dbapi-6"/>
+                <data android:pathPrefix="/viewLink"/>
+            </intent-filter>
+        </activity>
+        <activity-alias android:enabled="false" android:exported="true" android:name="com.dropbox.android.sharedlink.SharedLinkActivity.ContentLinkAlias" android:targetActivity="com.dropbox.android.sharedlink.SharedLinkActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:scheme="http"/>
+                <data android:host="www.dropbox.com"/>
+                <data android:host="m.dropbox.com"/>
+                <data android:host="dropbox.com"/>
+                <data android:host="meta-dbdev.dev.corp.dropbox.com"/>
+                <data android:pathPrefix="/l/scl/"/>
+                <data android:pathPrefix="/scl/"/>
+            </intent-filter>
+        </activity-alias>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedlink.SharedLinkErrorActivity" android:theme="@style/DbxBase.ToolbarActivity" android:windowSoftInputMode="adjustPan|stateUnchanged"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedlink.SharedLinkFolderBrowserActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.ContentLinkFolderInvitationActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.ContentLinkRequestAccessActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.ContentLinkSwitchAccountActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.VerifyEmailActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.JoinTeamEmailActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.ContentLinkOverQuotaActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.ContentLinkClaimActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentSettingsActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentUnshareActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentResetMembershipActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentDeleteActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentRemoveActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.GalleryPickerActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.PhotoBatchPickerActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.LocalFileBrowserActivity" android:theme="@style/DbxBase.NoActionBar.DarkThumbnailFrame"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.ExportToStorageAccessFrameworkActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.ImportFromStorageAccessFrameworkActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.PhotoGridPickerActivity" android:theme="@style/DbxBase.ToolbarActivity.Dialog"/>
+        <activity android:exported="false" android:icon="@drawable/copy_link" android:label="@string/copy_to_clipboard" android:name="com.dropbox.android.activity.CopyLinkToClipboardActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:icon="@drawable/send_to_contact" android:label="@string/send_email" android:name="com.dropbox.android.activity.ShareViaEmailActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:excludeFromRecents="true" android:exported="false" android:launchMode="singleTask" android:name="com.dropbox.android.activity.InstallUpdateActivity" android:taskAffinity="" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.InformationalCameraUploadActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="true" android:label="@string/camera_upload_tour_title" android:name="com.dropbox.android.activity.CameraUploadSettingsActivity" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter>
+                <action android:name="com.dropbox.intent.action.CAMERA_UPLOAD_SETTINGS"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.MoveToActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.CopyToActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.SetPasswordActivity" android:theme="@style/DbxBase.ToolbarActivity.Dialog"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.AlbumViewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.activity.ReferralActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.docpreviews.DocumentPreviewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.docpreviews.ExternalDocumentPreviewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="true" android:name="com.dropbox.android.activity.docpreviews.DocumentPreviewForSDKActivity" android:theme="@style/DbxBase.NoDisplay">
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.SHOW_PREVIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="true" android:icon="@drawable/db_pdf_logo" android:label="@string/external_preview_app_list_title" android:name="com.dropbox.android.activity.docpreviews.DocumentPreviewForAnonymousActivity" android:theme="@style/DbxBase.NoActionBar.Transparent">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/pdf"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.docpreviews.NoPreviewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <provider android:authorities="com.dropbox.android.LocalFile" android:exported="false" android:name="com.dropbox.android.provider.FileSystemProvider">
+            <grant-uri-permission android:pathPrefix="/"/>
+        </provider>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.activity.payment.PaymentCCWebviewActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.payment.PaymentCCWebviewActivity$PaymentsUpgradeNoConnectionActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.payment.PaymentSelectorActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="true" android:name="com.dropbox.android.activity.payment.PaymentUpgradeForSDKActivity" android:theme="@style/DbxBase.NoDisplay">
+            <intent-filter>
+                <action android:name="com.dropbox.android.intent.action.SHOW_UPGRADE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderSendInviteActivity" android:theme="@style/DbxBase.ToolbarActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentInviteActivity" android:theme="@style/DbxBase.ToolbarActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentMemberActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contentlink.SharedContentInviteeActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderManageActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderManageUnshareActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderResetMembershipActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderManageLeaveActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderManageKickoutActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderManageUserActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.sharedfolder.SharedFolderManageInviteActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.NewlyPairedCongratulationsActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.NewlyPairedEnableCUActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.CameraCaptureActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.UpdateAvatarWithCameraActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.UpdateAvatarWithGetContentActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.RecentsOnboardingActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.OfflineFoldersOnboardingActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:label="@string/disable_download_notification_header" android:name="com.dropbox.android.activity.DisableDownloadNotificationLandingPageActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:label="@string/disable_screenshot_notification_header" android:name="com.dropbox.android.activity.DisableScreenshotNotificationLandingPageActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:exported="false" android:name="com.dropbox.android.fileactivity.comments.CommentsActivity" android:theme="@style/DbxBase.ToolbarActivity" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:enabled="true" android:exported="true" android:name="com.dropbox.android.activity.DbxMainActivity" android:theme="@style/DbxBase.ToolbarActivity" android:windowSoftInputMode="adjustPan">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:scheme="http"/>
+                <data android:host="www.dropbox.com"/>
+                <data android:host="m.dropbox.com"/>
+                <data android:host="dropbox.com"/>
+                <data android:pathPattern="/l/.*/photos"/>
+                <data android:path="/m/photos"/>
+                <data android:path="/photos"/>
+            </intent-filter>
+        </activity>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:enabled="false" android:exported="true" android:name="com.dropbox.android.activity.NotesWebViewActivity" android:theme="@style/DbxBase.ToolbarActivity">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:scheme="http"/>
+                <data android:host="paper.dropbox.com"/>
+                <data android:host="notes.dropbox.com"/>
+                <data android:pathPrefix="/doc/"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.update.ForceUpdateActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.update.AlphaBuildUpdateActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:launchMode="singleTask" android:name="com.dropbox.android.migrate.ForceMigrateActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.StoragePermissionDeniedActivity" android:theme="@style/DbxBase.NoActionBar"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.PrintActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:exported="false" android:name="com.dropbox.android.contacts.EnableContactsUploadActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:enabled="true" android:exported="true" android:name="com.dropbox.android.activity.VoiceActionsActivity" android:theme="@style/DbxBase.NoDisplay">
+            <intent-filter>
+                <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.ConfigureSharedLinkActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.QuickUploadActivity" android:theme="@style/DbxBase.NoDisplay"/>
+        <activity android:enabled="false" android:exported="true" android:name="com.dropbox.android.activity.FacebookMessengerActivity" android:theme="@style/DbxBase.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.PICK"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="com.facebook.orca.category.PLATFORM_THREAD_20150314"/>
+            </intent-filter>
+        </activity>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.FacebookMessengerPickerActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.PhotosUploadToActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.activity.DevCUTransitionActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CUPreTurnOffWarningActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CUTurnOffNoticeActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CameraUploadUpgradeActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CameraUploadLinkComputerActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CameraUploadComputerLinkedActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CameraUploadComputerNotLinkedActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <activity android:exported="false" android:name="com.dropbox.android.camerauploads.CameraUploadGatedActivity" android:theme="@style/DbxBase.ToolbarActivity"/>
+        <receiver android:enabled="true" android:exported="true" android:name="com.dropbox.android.service.PackageReplacedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="false" android:name="com.dropbox.android.service.BluenoteService"/>
+        <service android:enabled="true" android:exported="false" android:name="com.dropbox.android.service.WatcherService"/>
+        <provider android:authorities="com.dropbox.android.google_measurement_service" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementContentProvider"/>
+        <receiver android:enabled="true" android:name="com.google.android.gms.measurement.AppMeasurementReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.measurement.UPLOAD"/>
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
+        <service android:exported="false" android:name="com.evernote.android.job.v21.PlatformJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:exported="false" android:name="com.evernote.android.job.v14.PlatformAlarmService"/>
+        <receiver android:exported="false" android:name="com.evernote.android.job.v14.PlatformAlarmReceiver">
+            <intent-filter>
+                <action android:name="com.evernote.android.job.v14.RUN_JOB"/>
+                <action android:name="net.vrallev.android.job.v14.RUN_JOB"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="false" android:name="com.evernote.android.job.JobBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <service android:exported="false" android:label="@string/uploader_label" android:name="com.dropbox.crashes.CrashUploadService" android:process=":crashes"/>
+    </application>
+</manifest>

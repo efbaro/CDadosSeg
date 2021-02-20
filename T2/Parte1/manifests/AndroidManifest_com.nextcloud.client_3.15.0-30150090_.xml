@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="29" android:compileSdkVersionCodename="10" package="com.nextcloud.client" platformBuildVersionCode="29" platformBuildVersionName="10">
+    <uses-permission android:maxSdkVersion="22" android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:maxSdkVersion="22" android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:maxSdkVersion="22" android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:maxSdkVersion="22" android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_SYNC_STATS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <queries>
+        <package android:name="it.niedermann.nextcloud.deck"/>
+        <package android:name="it.niedermann.nextcloud.deck.play"/>
+        <package android:name="it.niedermann.nextcloud.deck.dev"/>
+    </queries>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.NFC"/>
+    <application android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:fullBackupContent="@xml/backup_config" android:icon="@mipmap/ic_launcher" android:installLocation="internalOnly" android:label="@string/app_name" android:manageSpaceActivity="com.owncloud.android.ui.activity.ManageSpaceActivity" android:name="com.owncloud.android.MainApp" android:networkSecurityConfig="@xml/network_security_config" android:requestLegacyExternalStorage="true" android:roundIcon="@mipmap/ic_launcher" android:supportsRtl="true" android:theme="@style/Theme.ownCloud.Toolbar" android:usesCleartextTraffic="true">
+        <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true"/>
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false"/>
+        <meta-data android:name="google_analytics_ssaid_collection_enabled" android:value="false"/>
+        <activity android:exported="true" android:launchMode="singleTask" android:name="com.owncloud.android.authentication.ModifiedAuthenticatorActivity" android:theme="@style/Theme.ownCloud.noActionBar.Login">
+            <intent-filter>
+                <action android:name="com.owncloud.android.workaround.accounts.CREATE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="login" android:scheme="@string/login_data_own_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity-alias android:name="com.owncloud.android.authentication.AuthenticatorActivity" android:targetActivity="com.owncloud.android.authentication.ModifiedAuthenticatorActivity"/>
+        <service android:name="com.owncloud.android.services.firebase.NCFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <activity android:configChanges="orientation|screenSize" android:label="@string/app_name" android:launchMode="singleTop" android:name="com.owncloud.android.ui.activity.FileDisplayActivity" android:theme="@style/Theme.ownCloud.Launcher">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:host="*"/>
+                <data android:pathPattern="/f/..*"/>
+                <data android:pathPattern="/..*/f/..*"/>
+                <data android:pathPattern="/..*/..*/f/..*"/>
+                <data android:pathPattern="/..*/..*/..*/f/..*"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/users_and_groups_searchable"/>
+        </activity>
+        <activity android:name="com.owncloud.android.ui.activity.ManageAccountsActivity"/>
+        <activity android:name="com.owncloud.android.ui.activity.UserInfoActivity"/>
+        <activity android:name="com.owncloud.android.ui.activity.NotificationsActivity"/>
+        <activity android:name="com.owncloud.android.ui.activity.CommunityActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.owncloud.android.ui.activities.ActivitiesActivity"/>
+        <activity android:name="com.owncloud.android.ui.activity.SyncedFoldersActivity"/>
+        <receiver android:name="com.nextcloud.client.jobs.MediaFoldersDetectionWork$NotificationReceiver"/>
+        <receiver android:name="com.nextcloud.client.jobs.NotificationWork$NotificationReceiver"/>
+        <activity android:name="com.owncloud.android.ui.activity.UploadFilesActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.owncloud.android.ui.activity.ExternalSiteWebView"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.owncloud.android.ui.activity.RichDocumentsEditorWebView"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.owncloud.android.ui.activity.TextEditorWebView"/>
+        <activity android:launchMode="singleInstance" android:name="com.owncloud.android.ui.activity.ContactsPreferenceActivity"/>
+        <activity android:excludeFromRecents="true" android:name="com.owncloud.android.ui.activity.ReceiveExternalFilesActivity" android:taskAffinity="" android:theme="@style/Theme.ownCloud.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="*/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="*/*"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.owncloud.android.ui.activity.SettingsActivity" android:theme="@style/Theme.ownCloud"/>
+        <activity android:name="com.owncloud.android.ui.preview.PreviewImageActivity" android:theme="@style/Theme.ownCloud.Overlay"/>
+        <activity android:label="@string/app_name" android:name="com.owncloud.android.ui.preview.PreviewVideoActivity" android:theme="@style/Theme.ownCloud.Fullscreen"/>
+        <service android:exported="true" android:name="com.owncloud.android.authentication.AccountAuthenticatorService">
+            <intent-filter android:priority="100">
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator"/>
+        </service>
+        <service android:exported="true" android:name="com.owncloud.android.syncadapter.FileSyncService">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/syncadapter_files"/>
+        </service>
+        <provider android:authorities="@string/authority" android:enabled="true" android:exported="true" android:label="@string/sync_string_files" android:name="com.owncloud.android.providers.FileContentProvider" android:syncable="true">
+            <path-permission android:pathPrefix="/shares" android:readPermission="false" android:writePermission="false"/>
+            <path-permission android:pathPrefix="/capabilities" android:readPermission="false" android:writePermission="false"/>
+            <path-permission android:pathPrefix="/uploads" android:readPermission="false" android:writePermission="false"/>
+            <path-permission android:pathPrefix="/synced_folders" android:readPermission="false" android:writePermission="false"/>
+            <path-permission android:pathPrefix="/external_links" android:readPermission="false" android:writePermission="false"/>
+            <path-permission android:pathPrefix="/arbitrary_data" android:readPermission="false" android:writePermission="false"/>
+            <path-permission android:pathPrefix="/virtual" android:readPermission="false" android:writePermission="false"/>
+            <path-permission android:pathPrefix="/filesystem" android:readPermission="false" android:writePermission="false"/>
+        </provider>
+        <provider android:authorities="@string/users_and_groups_search_authority" android:enabled="true" android:exported="false" android:label="@string/share_search" android:name="com.owncloud.android.providers.UsersAndGroupsSearchProvider"/>
+        <provider android:authorities="@string/document_provider_authority" android:enabled="true" android:exported="true" android:grantUriPermissions="true" android:name="com.owncloud.android.providers.DocumentsStorageProvider" android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER"/>
+            </intent-filter>
+        </provider>
+        <provider android:authorities="@string/file_provider_authority" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/exposed_filepaths"/>
+        </provider>
+        <provider android:authorities="@string/image_cache_provider_authority" android:exported="true" android:grantUriPermissions="true" android:name="com.owncloud.android.providers.DiskLruImageCacheFileProvider" android:readPermission="android.permission.MANAGE_DOCUMENTS"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:launchMode="singleTask" android:name="com.owncloud.android.authentication.AuthenticatorActivity" android:theme="@style/Theme.ownCloud.noActionBar.Login">
+            <intent-filter>
+                <action android:name="com.owncloud.android.workaround.accounts.CREATE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:clearTaskOnLaunch="true" android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:launchMode="singleTask" android:name="com.owncloud.android.authentication.DeepLinkLoginActivity" android:theme="@style/Theme.ownCloud.noActionBar.Login">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="login" android:scheme="@string/login_data_own_scheme"/>
+            </intent-filter>
+        </activity>
+        <service android:name="com.owncloud.android.services.OperationsService"/>
+        <service android:name="com.owncloud.android.files.services.FileDownloader"/>
+        <service android:name="com.nextcloud.client.files.downloader.DownloaderService"/>
+        <service android:name="com.owncloud.android.files.services.FileUploader"/>
+        <service android:name="com.nextcloud.client.media.PlayerService"/>
+        <activity android:launchMode="singleTask" android:name="com.owncloud.android.ui.activity.PassCodeActivity"/>
+        <activity android:launchMode="singleTask" android:name="com.owncloud.android.ui.activity.RequestCredentialsActivity"/>
+        <activity android:name="com.owncloud.android.ui.activity.ConflictsResolveActivity"/>
+        <activity android:name="com.owncloud.android.ui.activity.ErrorsWhileCopyingHandlerActivity"/>
+        <activity android:name="com.nextcloud.client.logger.ui.LogsActivity"/>
+        <activity android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:launchMode="singleInstance" android:name="com.nextcloud.client.errorhandling.ShowErrorActivity" android:process=":crash" android:theme="@style/Theme.ownCloud.Toolbar"/>
+        <activity android:name="com.owncloud.android.ui.activity.UploadListActivity"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.owncloud.android.ui.trashbin.TrashbinActivity"/>
+        <activity android:name="com.nextcloud.client.onboarding.WhatsNewActivity" android:theme="@style/Theme.ownCloud.noActionBar.Login"/>
+        <activity android:configChanges="orientation|screenSize" android:name="com.nextcloud.client.onboarding.FirstRunActivity" android:theme="@style/Theme.ownCloud.noActionBar.Login"/>
+        <receiver android:name="com.owncloud.android.files.BootupBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+        <activity android:icon="@drawable/shared_via_link" android:label="@string/copy_link" android:name="com.owncloud.android.ui.activity.CopyToClipboardActivity"/>
+        <activity android:label="@string/app_name" android:name="com.owncloud.android.ui.activity.FolderPickerActivity"/>
+        <activity android:label="@string/app_name" android:launchMode="singleTop" android:name="com.owncloud.android.ui.activity.FilePickerActivity" android:theme="@style/Theme.ownCloud.Dialog.NoTitle" android:windowSoftInputMode="adjustResize"/>
+        <activity android:exported="false" android:label="@string/share_dialog_title" android:launchMode="singleTop" android:name="com.owncloud.android.ui.activity.ShareActivity" android:theme="@style/Theme.ownCloud.Dialog.NoTitle" android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/users_and_groups_searchable"/>
+        </activity>
+        <activity android:label="@string/manage_space_title" android:name="com.owncloud.android.ui.activity.ManageSpaceActivity" android:theme="@style/Theme.ownCloud"/>
+        <service android:enabled="true" android:exported="true" android:name="com.owncloud.android.services.AccountManagerService"/>
+        <activity android:exported="true" android:name="com.owncloud.android.ui.activity.SsoGrantPermissionActivity" android:theme="@style/Theme.ownCloud.Dialog.NoTitle"/>
+        <activity android:name="com.nextcloud.client.etm.EtmActivity" android:theme="@style/Theme.ownCloud.Toolbar"/>
+        <service android:exported="false" android:name="com.google.firebase.messaging.FirebaseMessagingService">
+            <intent-filter android:priority="-500">
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.components.ComponentDiscoveryService">
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.iid.Registrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+        </service>
+        <activity android:name="com.blikoon.qrcodescanner.QrCodeActivity"/>
+        <service android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"/>
+        <service android:directBootAware="false" android:enabled="@bool/enable_system_job_service_default" android:exported="true" android:name="androidx.work.impl.background.systemjob.SystemJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:directBootAware="false" android:enabled="@bool/enable_system_foreground_service_default" android:exported="false" android:name="androidx.work.impl.foreground.SystemForegroundService"/>
+        <receiver android:directBootAware="false" android:enabled="true" android:exported="false" android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"/>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_OKAY"/>
+                <action android:name="android.intent.action.BATTERY_LOW"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy">
+            <intent-filter>
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW"/>
+                <action android:name="android.intent.action.DEVICE_STORAGE_OK"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="false" android:exported="false" android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="@bool/enable_system_alarm_service_default" android:exported="false" android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver">
+            <intent-filter>
+                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:directBootAware="false" android:enabled="true" android:exported="true" android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver" android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:exported="true" android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </receiver>
+        <provider android:authorities="com.nextcloud.client.firebaseinitprovider" android:exported="false" android:initOrder="100" android:name="com.google.firebase.provider.FirebaseInitProvider"/>
+        <activity android:exported="false" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <service android:exported="false" android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery">
+            <meta-data android:name="backend:com.google.android.datatransport.cct.CctBackendFactory" android:value="cct"/>
+        </service>
+        <service android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"/>
+        <service android:directBootAware="true" android:exported="false" android:name="androidx.room.MultiInstanceInvalidationService"/>
+    </application>
+</manifest>
