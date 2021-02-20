@@ -8,7 +8,7 @@ Repositório utilizado para entrega de trabalhos do curso de Ciência de Dados.
 
 ## Tarefas
 
-- [Tarefa 02 - 23/02/2021]()
+- [Tarefa 02 - 23/02/2021](https://github.com/efbaro/CDadosSeg/blob/main/T2/README.md)
 
 ## Autor
 
