@@ -5,7 +5,7 @@ Repositório utilizado para entrega de trabalhos do curso de Ciência de Dados.
 # Tarefas
 
 - [Tarefa 02 - 23/02/2021](https://github.com/efbaro/CDadosSeg/tree/main/T2)
-
+- [Tarefa 03 - 02/03/2021](https://github.com/efbaro/CDadosSeg/blob/main/README.md) - Seção Exploração de dados do README.md
 # Exploração de dados
 
 *Dataset* obtido da [UNB (University of New Brunswick)](https://www.unb.ca/cic/datasets/andmal2017.html) chamado **CIC-AndMal2017**, contendo dados de fluxo de tráfego rede de 10.854 aplicações Android sendo 4.354 *malware* e 6.500 de aplicações benignas.
@@ -73,7 +73,7 @@ Os dados possuem 85 características que foram capturadas utilizando o [CICFlowM
   - ***Timestamp***, pois neste *dataset* representa apenas a data e hora em que os dados do exemplos foram capturados. Este dado pode atrapalhar a inferência de novos exemplos após o treinamento do modelo, uma vez que datas passadas não se repetirão.
 
 - Manter:
-  - Os demais atributos, pois representam dados que podem ajudar na inferência de *Malware*. [Descrição dos atributos do dataset]().
+  - Os demais atributos, pois representam dados que podem ajudar na inferência de *Malware*. [Descrição dos atributos do dataset](https://github.com/efbaro/CDadosSeg/blob/main/descricao_atributos.txt).
 
 # Autor
 
