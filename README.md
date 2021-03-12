@@ -6,6 +6,8 @@ Repositório utilizado para entrega de trabalhos do curso de Ciência de Dados.
 
 - [Tarefa 02 - 23/02/2021](https://github.com/efbaro/CDadosSeg/tree/main/T2)
 - [Tarefa 03 - 02/03/2021](https://github.com/efbaro/CDadosSeg/blob/main/README.md) - Seção Exploração de dados do README.md
+- [Projeto Final - 12/03/2021](https://github.com/efbaro/CDadosSeg/tree/main/projeto)
+
 # Exploração de dados
 
 *Dataset* obtido da [UNB (University of New Brunswick)](https://www.unb.ca/cic/datasets/andmal2017.html) chamado **CIC-AndMal2017**, contendo dados de fluxo de tráfego rede de 10.854 aplicações Android sendo 4.354 *malware* e 6.500 de aplicações benignas.
